@@ -17,6 +17,6 @@ func NewApp() *app {
 func (app *app) Run() {
 	cnf := internal.NewConfig()
 	r := chi.NewRouter()
-	r.Method("GET", "/", internal.Handler(internal.CustomHandler))
+	r.Group(func(r chi.Router) { internal.InternalRouter(r) })
 	http.ListenAndServe(fmt.Sprintf(":%d", cnf.Port()), r)
 }
